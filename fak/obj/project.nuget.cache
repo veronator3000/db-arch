@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "wcjeFaDLYmyWjQawLM01eIX2lsgB+1JNMC8wa8NRcEzyiyIjOHwoeby3xwsgWlv2ej+eiZZLdR49R1lMSWVPMA==",
+  "success": true,
+  "projectFilePath": "/home/veronika/db-arch/fak/fak.csproj",
+  "expectedPackageFiles": [
+    "/home/veronika/.nuget/packages/bogus/35.5.0/bogus.35.5.0.nupkg.sha512",
+    "/home/veronika/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "/home/veronika/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.0/microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "/home/veronika/.nuget/packages/npgsql/8.0.2/npgsql.8.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
