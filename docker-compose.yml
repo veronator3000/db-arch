@@ -3,7 +3,8 @@ version: '3.8'
 services:
   db:
     image: postgres
-    restart: always
+    container_name: db
+    restart: no
     environment:
       POSTGRES_DB: twich
       POSTGRES_USER: user
@@ -15,10 +16,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 10s
+      start_period: 5s
   
   migration_script:
     restart: no
+    container_name: migrations
     build:
       context: .
       dockerfile: Dockerfile
@@ -38,6 +40,7 @@ services:
         
   fak_app:
     restart: no
+    container_name: fak_app
     build:
       context: ./fak
       dockerfile: Dockerfile
@@ -48,5 +51,23 @@ services:
       - "8081:8081"
     environment:
       FILLING_CNT: ${FILLING_CNT}
+  
+  
+  analyze_app:
+    restart: no
+    container_name: analyze_app 
+  
+    build:
+      context: ./analyze
+      dockerfile: Dockerfile
+    volumes:
+      - ./result:/docker-entrypoint-initdb.d/result
+    depends_on:
+       fak_app:
+         condition: service_completed_successfully
+    env_file:
+      - .env
+    ports:
+      - "8082:8082"
 
 

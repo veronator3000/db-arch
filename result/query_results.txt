@@ -1,0 +1,76 @@
+Results for Query: SELECT * FROM users, Attempt: 1
+---------------
+Seq Scan on users  (cost=0.00..20.70 rows=1070 width=48) (actual time=0.003..0.005 rows=50 loops=1)
+Planning Time: 0.085 ms
+Execution Time: 0.018 ms
+
+Results for Query: SELECT * FROM users, Attempt: 2
+---------------
+Seq Scan on users  (cost=0.00..20.70 rows=1070 width=48) (actual time=0.008..0.012 rows=50 loops=1)
+Planning Time: 0.040 ms
+Execution Time: 0.024 ms
+
+Results for Query: SELECT * FROM users, Attempt: 3
+---------------
+Seq Scan on users  (cost=0.00..20.70 rows=1070 width=48) (actual time=0.003..0.005 rows=50 loops=1)
+Planning Time: 0.013 ms
+Execution Time: 0.010 ms
+
+Results for Query: SELECT * FROM users, Attempt: 4
+---------------
+Seq Scan on users  (cost=0.00..20.70 rows=1070 width=48) (actual time=0.002..0.004 rows=50 loops=1)
+Planning Time: 0.008 ms
+Execution Time: 0.007 ms
+
+Results for Query: SELECT COUNT(*) FROM users, Attempt: 1
+---------------
+Aggregate  (cost=23.38..23.39 rows=1 width=8) (actual time=0.009..0.009 rows=1 loops=1)
+  ->  Seq Scan on users  (cost=0.00..20.70 rows=1070 width=0) (actual time=0.002..0.005 rows=50 loops=1)
+Planning Time: 0.054 ms
+Execution Time: 0.020 ms
+
+Results for Query: SELECT COUNT(*) FROM users, Attempt: 2
+---------------
+Aggregate  (cost=23.38..23.39 rows=1 width=8) (actual time=0.007..0.007 rows=1 loops=1)
+  ->  Seq Scan on users  (cost=0.00..20.70 rows=1070 width=0) (actual time=0.002..0.004 rows=50 loops=1)
+Planning Time: 0.012 ms
+Execution Time: 0.012 ms
+
+Results for Query: SELECT COUNT(*) FROM users, Attempt: 3
+---------------
+Aggregate  (cost=23.38..23.39 rows=1 width=8) (actual time=0.006..0.007 rows=1 loops=1)
+  ->  Seq Scan on users  (cost=0.00..20.70 rows=1070 width=0) (actual time=0.001..0.004 rows=50 loops=1)
+Planning Time: 0.010 ms
+Execution Time: 0.011 ms
+
+Results for Query: SELECT COUNT(*) FROM users, Attempt: 4
+---------------
+Aggregate  (cost=23.38..23.39 rows=1 width=8) (actual time=0.006..0.006 rows=1 loops=1)
+  ->  Seq Scan on users  (cost=0.00..20.70 rows=1070 width=0) (actual time=0.001..0.004 rows=50 loops=1)
+Planning Time: 0.009 ms
+Execution Time: 0.011 ms
+
+Results for Query: SELECT * FROM streams, Attempt: 1
+---------------
+Seq Scan on streams  (cost=0.00..15.10 rows=510 width=132) (actual time=0.002..0.011 rows=50 loops=1)
+Planning Time: 0.101 ms
+Execution Time: 0.016 ms
+
+Results for Query: SELECT * FROM streams, Attempt: 2
+---------------
+Seq Scan on streams  (cost=0.00..15.10 rows=510 width=132) (actual time=0.003..0.006 rows=50 loops=1)
+Planning Time: 0.013 ms
+Execution Time: 0.011 ms
+
+Results for Query: SELECT * FROM streams, Attempt: 3
+---------------
+Seq Scan on streams  (cost=0.00..15.10 rows=510 width=132) (actual time=0.002..0.006 rows=50 loops=1)
+Planning Time: 0.011 ms
+Execution Time: 0.011 ms
+
+Results for Query: SELECT * FROM streams, Attempt: 4
+---------------
+Seq Scan on streams  (cost=0.00..15.10 rows=510 width=132) (actual time=0.002..0.006 rows=50 loops=1)
+Planning Time: 0.010 ms
+Execution Time: 0.011 ms
+
