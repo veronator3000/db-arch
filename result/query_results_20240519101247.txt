@@ -1,0 +1,20 @@
+query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'lol' GROUP BY s.id, s.category;
+best case time: 2.9
+worst case time: 46.34
+average case time: 24.05142857142857
+
+query: SELECT * FROM chat_messages WHERE stream_id = 1;
+best case time: 4.19
+worst case time: 12.66
+average case time: 8.425
+
+query: SELECT DATE_TRUNC('month', created_at) AS month, COUNT(*) AS transaction_count FROM transactions_money WHERE created_at >= DATE_TRUNC('year', CURRENT_DATE) - INTERVAL '5 years' GROUP BY DATE_TRUNC('month', created_at) ORDER BY DATE_TRUNC('month', created_at);
+best case time: 5.53
+worst case time: 27.81
+average case time: 19.057499999999997
+
+query: SELECT DISTINCT s.user_id as streamer_id, u.username as streamer_username, su.subscribing_user_id as find_for_user FROM streams s JOIN subscribed_users su ON s.user_id = su.subscribed_user_id JOIN users u on s.user_id = u.id WHERE su.subscribing_user_id = 37;
+best case time: 0.26
+worst case time: 54.43
+average case time: 36.12875
+

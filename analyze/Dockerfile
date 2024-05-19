@@ -14,4 +14,4 @@ FROM mcr.microsoft.com/dotnet/runtime:8.0
 WORKDIR /analyze
 COPY --from=build-env /analyze/out .
 EXPOSE 8082
-ENTRYPOINT ["dotnet", "analyze.dll"]
+ENTRYPOINT ["sh", "-c", "dotnet analyze.dll"]

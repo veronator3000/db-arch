@@ -123,17 +123,27 @@ if (existFlag)
 
 // streams
     var uniqueCategories = new List<string>();
-    for (var i = 0; i < 5; i++)
-    {
-        uniqueCategories.Add(faker.Commerce.Department());
-    }
+    uniqueCategories.Add("lol");
+    uniqueCategories.Add("game");
 
+    uniqueCategories.Add("cats");
+
+    uniqueCategories.Add("sad");
+
+
+    foreach (var s in uniqueCategories)
+    {
+        Console.WriteLine(s);
+    }
 
     for (var i = 0; i < fillingCnt; i++)
     {
         var title = faker.Lorem.Sentence();
         var description = faker.Lorem.Paragraph();
-        var category = uniqueCategories[faker.Random.Number(0, uniqueCategories.Count - 1)];
+    
+        // var category = uniqueCategories[faker.Random.Number(0, uniqueCategories.Count - 1)]; 
+        var category = "lol"; 
+
         var duration = TimeSpan.FromMinutes(faker.Random.Number(1, 240));
         var viewersCount = faker.Random.Number(0, 10000);
         var userId = faker.Random.Number(1, fillingCnt);
