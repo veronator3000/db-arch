@@ -73,8 +73,8 @@ class Program
                                                 var startCost = double.Parse(match.Groups[1].Value);
                                                 var endCost = double.Parse(match.Groups[2].Value);
                                                 res.Add(endCost);
-                                                Console.WriteLine(
-                                                    $"attempt {a + 1}/{attemptCount}: startCost={startCost}, endCost={endCost}");
+                                                // Console.WriteLine(
+                                                //     $"attempt {a + 1}/{attemptCount}: startCost={startCost}, endCost={endCost}");
                                             }
                                             else
                                             {

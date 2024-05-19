@@ -13,7 +13,7 @@ services:
       - "5432:5432"
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "user", "-d", "twich", "-h", "localhost", "-p", "5432" ]
-      interval: 5s
+      interval: 3s
       timeout: 5s
       retries: 5
       start_period: 5s
@@ -69,5 +69,26 @@ services:
       - .env
     ports:
       - "8082:8082"
+  
+  partition_service:
+    restart: no
+    container_name: partition_service
+    build:
+      context: .
+      dockerfile: Dockerfile2
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${USER}
+      POSTGRES_PASSWORD: ${PASSWORD}
+    depends_on:
+      fak_app:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
+      analyze_app:
+        condition: service_completed_successfully
+    ports:
+      - "8083:8083"
 
 
