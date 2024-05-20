@@ -1,0 +1,345 @@
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+GroupAggregate  (cost=44.59..44.68 rows=3 width=23) (actual time=0.056..0.057 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+  Group Key: s.id
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+  ->  Sort  (cost=44.59..44.61 rows=8 width=19) (actual time=0.052..0.053 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        Sort Key: s.id
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        Sort Method: quicksort  Memory: 25kB
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        ->  Nested Loop Left Join  (cost=5.87..44.47 rows=8 width=19) (actual time=0.033..0.048 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+              ->  Bitmap Heap Scan on streams s  (cost=4.30..13.77 rows=3 width=15) (actual time=0.028..0.040 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Recheck Cond: ((category)::text = 'SQL'::text)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Heap Blocks: exact=3
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    ->  Bitmap Index Scan on idx_streams_category  (cost=0.00..4.30 rows=3 width=0) (actual time=0.020..0.020 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                          Index Cond: ((category)::text = 'SQL'::text)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+              ->  Bitmap Heap Scan on stream_viewers sv  (cost=1.57..10.12 rows=11 width=8) (actual time=0.001..0.001 rows=0 loops=3)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Recheck Cond: (s.id = stream_id)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    ->  Bitmap Index Scan on stream_viewers_pkey  (cost=0.00..1.57 rows=11 width=0) (actual time=0.001..0.001 rows=0 loops=3)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                          Index Cond: (stream_id = s.id)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Planning Time: 1.429 ms
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Execution Time: 0.090 ms
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+GroupAggregate  (cost=44.59..44.68 rows=3 width=23) (actual time=0.044..0.046 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+  Group Key: s.id
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+  ->  Sort  (cost=44.59..44.61 rows=8 width=19) (actual time=0.038..0.039 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        Sort Key: s.id
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        Sort Method: quicksort  Memory: 25kB
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        ->  Nested Loop Left Join  (cost=5.87..44.47 rows=8 width=19) (actual time=0.022..0.032 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+              ->  Bitmap Heap Scan on streams s  (cost=4.30..13.77 rows=3 width=15) (actual time=0.016..0.020 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Recheck Cond: ((category)::text = 'SQL'::text)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Heap Blocks: exact=3
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    ->  Bitmap Index Scan on idx_streams_category  (cost=0.00..4.30 rows=3 width=0) (actual time=0.012..0.012 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                          Index Cond: ((category)::text = 'SQL'::text)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+              ->  Bitmap Heap Scan on stream_viewers sv  (cost=1.57..10.12 rows=11 width=8) (actual time=0.002..0.002 rows=0 loops=3)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Recheck Cond: (s.id = stream_id)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    ->  Bitmap Index Scan on stream_viewers_pkey  (cost=0.00..1.57 rows=11 width=0) (actual time=0.001..0.001 rows=0 loops=3)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                          Index Cond: (stream_id = s.id)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Planning Time: 0.199 ms
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Execution Time: 0.084 ms
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+GroupAggregate  (cost=44.59..44.68 rows=3 width=23) (actual time=0.028..0.030 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+  Group Key: s.id
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+  ->  Sort  (cost=44.59..44.61 rows=8 width=19) (actual time=0.024..0.026 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        Sort Key: s.id
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        Sort Method: quicksort  Memory: 25kB
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        ->  Nested Loop Left Join  (cost=5.87..44.47 rows=8 width=19) (actual time=0.014..0.022 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+              ->  Bitmap Heap Scan on streams s  (cost=4.30..13.77 rows=3 width=15) (actual time=0.010..0.014 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Recheck Cond: ((category)::text = 'SQL'::text)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Heap Blocks: exact=3
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    ->  Bitmap Index Scan on idx_streams_category  (cost=0.00..4.30 rows=3 width=0) (actual time=0.008..0.008 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                          Index Cond: ((category)::text = 'SQL'::text)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+              ->  Bitmap Heap Scan on stream_viewers sv  (cost=1.57..10.12 rows=11 width=8) (actual time=0.001..0.001 rows=0 loops=3)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Recheck Cond: (s.id = stream_id)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    ->  Bitmap Index Scan on stream_viewers_pkey  (cost=0.00..1.57 rows=11 width=0) (actual time=0.001..0.001 rows=0 loops=3)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                          Index Cond: (stream_id = s.id)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Planning Time: 0.116 ms
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Execution Time: 0.052 ms
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+GroupAggregate  (cost=44.59..44.68 rows=3 width=23) (actual time=0.021..0.023 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+  Group Key: s.id
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+  ->  Sort  (cost=44.59..44.61 rows=8 width=19) (actual time=0.019..0.020 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        Sort Key: s.id
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        Sort Method: quicksort  Memory: 25kB
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        ->  Nested Loop Left Join  (cost=5.87..44.47 rows=8 width=19) (actual time=0.011..0.016 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+              ->  Bitmap Heap Scan on streams s  (cost=4.30..13.77 rows=3 width=15) (actual time=0.007..0.009 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Recheck Cond: ((category)::text = 'SQL'::text)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Heap Blocks: exact=3
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    ->  Bitmap Index Scan on idx_streams_category  (cost=0.00..4.30 rows=3 width=0) (actual time=0.005..0.005 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                          Index Cond: ((category)::text = 'SQL'::text)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+              ->  Bitmap Heap Scan on stream_viewers sv  (cost=1.57..10.12 rows=11 width=8) (actual time=0.001..0.001 rows=0 loops=3)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Recheck Cond: (s.id = stream_id)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    ->  Bitmap Index Scan on stream_viewers_pkey  (cost=0.00..1.57 rows=11 width=0) (actual time=0.001..0.001 rows=0 loops=3)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                          Index Cond: (stream_id = s.id)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Planning Time: 0.095 ms
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Execution Time: 0.042 ms
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+GroupAggregate  (cost=44.59..44.68 rows=3 width=23) (actual time=0.021..0.023 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+  Group Key: s.id
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+  ->  Sort  (cost=44.59..44.61 rows=8 width=19) (actual time=0.018..0.019 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        Sort Key: s.id
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        Sort Method: quicksort  Memory: 25kB
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+        ->  Nested Loop Left Join  (cost=5.87..44.47 rows=8 width=19) (actual time=0.010..0.016 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+              ->  Bitmap Heap Scan on streams s  (cost=4.30..13.77 rows=3 width=15) (actual time=0.007..0.009 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Recheck Cond: ((category)::text = 'SQL'::text)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Heap Blocks: exact=3
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    ->  Bitmap Index Scan on idx_streams_category  (cost=0.00..4.30 rows=3 width=0) (actual time=0.005..0.005 rows=3 loops=1)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                          Index Cond: ((category)::text = 'SQL'::text)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+              ->  Bitmap Heap Scan on stream_viewers sv  (cost=1.57..10.12 rows=11 width=8) (actual time=0.001..0.001 rows=0 loops=3)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    Recheck Cond: (s.id = stream_id)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                    ->  Bitmap Index Scan on stream_viewers_pkey  (cost=0.00..1.57 rows=11 width=0) (actual time=0.001..0.001 rows=0 loops=3)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+                          Index Cond: (stream_id = s.id)
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Planning Time: 0.090 ms
+
+results for query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;, attempt: 5
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Execution Time: 0.041 ms
+
+Query: SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = 'SQL' GROUP BY s.id, s.category;
+Best Case: 0
+Worst Case: 0
+Average Case: 0
+

@@ -1,0 +1,16 @@
+results for query: SELECT * FROM users, attempt: 1
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Seq Scan on users  (cost=0.00..16.00 rows=900 width=29) (actual time=0.158..0.479 rows=900 loops=1)
+
+results for query: SELECT * FROM users, attempt: 2
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Seq Scan on users  (cost=0.00..16.00 rows=900 width=29) (actual time=0.006..0.049 rows=900 loops=1)
+
+results for query: SELECT * FROM users, attempt: 3
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Seq Scan on users  (cost=0.00..16.00 rows=900 width=29) (actual time=0.008..0.074 rows=900 loops=1)
+
+results for query: SELECT * FROM users, attempt: 4
+┐(シ)┌ ┐(シ)┌ ┐(シ)┌
+Seq Scan on users  (cost=0.00..16.00 rows=900 width=29) (actual time=0.004..0.052 rows=900 loops=1)
+

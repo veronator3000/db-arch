@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("fak")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8da7b32b4f7e0b795d92c2100b819b8021399aef")]
 [assembly: System.Reflection.AssemblyProductAttribute("fak")]
 [assembly: System.Reflection.AssemblyTitleAttribute("fak")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

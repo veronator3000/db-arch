@@ -2,6 +2,7 @@
 using Npgsql;
 using System;
 
+    // ВОЗМОЖНО стоит задуматься и подогонать гереацию под запросы чтобы от них был смысл
 var fillingCnt = int.Parse(Environment.GetEnvironmentVariable("FILLING_CNT") ?? "10");
 
 var faker = new Faker();
@@ -31,11 +32,13 @@ using var cmdSubscribers = new NpgsqlCommand();
 using var cmdSubscribedUsers = new NpgsqlCommand();
 using var cmdNotifications = new NpgsqlCommand();
 using var cmdRecommendations = new NpgsqlCommand();
-var cmdTransactionsMoney = new NpgsqlCommand();
+using var cmdTransactionsMoney = new NpgsqlCommand();
+using var cmdStreamViewers = new NpgsqlCommand();
+using var cmdConnection = new NpgsqlCommand();
 
-var check = new NpgsqlCommand("SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'recommendations')", connection);
+var check = new NpgsqlCommand(
+    "SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'recommendations')", connection);
 var existFlag = (bool)check.ExecuteScalar();
-
 
 
 cmdRoles.Connection = connection;
@@ -48,6 +51,9 @@ cmdSubscribedUsers.Connection = connection;
 cmdNotifications.Connection = connection;
 cmdRecommendations.Connection = connection;
 cmdTransactionsMoney.Connection = connection;
+cmdStreamViewers.Connection = connection;
+cmdConnection.Connection = connection;
+
 
 // если не отработал полностью 1.х.х - все отношения не созданы, то не заполняем таблицу
 if (existFlag)
@@ -58,7 +64,7 @@ if (existFlag)
         var weight = faker.Random.Number(1, 100);
 
         cmdRoles.CommandText = "INSERT INTO roles (role_name, weight) VALUES (@roleName, @weight)";
-        cmdRoles.Parameters.Clear(); 
+        cmdRoles.Parameters.Clear();
 
         var roleNameParam = new NpgsqlParameter("@roleName", roleName);
         var weightParam = new NpgsqlParameter("@weight", weight);
@@ -67,7 +73,6 @@ if (existFlag)
 
         cmdRoles.ExecuteNonQuery();
     }
-
 
 
 // users
@@ -79,7 +84,7 @@ if (existFlag)
 
         cmdUsers.CommandText =
             "INSERT INTO users (username, role_id, created_at) VALUES (@username, @roleId, @createdAt)";
-        cmdUsers.Parameters.Clear(); 
+        cmdUsers.Parameters.Clear();
 
         var usernameParam = new NpgsqlParameter("@username", username);
         var roleIdParam = new NpgsqlParameter("@roleId", roleId);
@@ -102,7 +107,7 @@ if (existFlag)
 
         cmdRolesFunctionalities.CommandText =
             "INSERT INTO roles_functionalities (role_id, functionality_id, min_weight_required) VALUES (@roleId, @functionalityId, @minWeightRequired)";
-        cmdRolesFunctionalities.Parameters.Clear(); 
+        cmdRolesFunctionalities.Parameters.Clear();
 
         var roleIdParam = new NpgsqlParameter("@roleId", roleId);
         var functionalityIdParam = new NpgsqlParameter("@functionalityId", functionalityId);
@@ -117,11 +122,28 @@ if (existFlag)
 
 
 // streams
+    var uniqueCategories = new List<string>();
+    uniqueCategories.Add("lol");
+    uniqueCategories.Add("game");
+
+    uniqueCategories.Add("cats");
+
+    uniqueCategories.Add("sad");
+
+
+    foreach (var s in uniqueCategories)
+    {
+        Console.WriteLine(s);
+    }
+
     for (var i = 0; i < fillingCnt; i++)
     {
         var title = faker.Lorem.Sentence();
         var description = faker.Lorem.Paragraph();
-        var category = faker.Random.Word();
+    
+        // var category = uniqueCategories[faker.Random.Number(0, uniqueCategories.Count - 1)]; 
+        var category = "lol"; 
+
         var duration = TimeSpan.FromMinutes(faker.Random.Number(1, 240));
         var viewersCount = faker.Random.Number(0, 10000);
         var userId = faker.Random.Number(1, fillingCnt);
@@ -147,6 +169,39 @@ if (existFlag)
         cmdStreams.ExecuteNonQuery();
     }
 
+    // stream_viewers
+    for (var i = 0; i < fillingCnt; i++)
+    {
+        var streamId = i + 1;
+        var viewerId = faker.Random.Number(1, fillingCnt);
+
+        var checkDuplicateCmd = new NpgsqlCommand(
+            "SELECT COUNT(*) FROM stream_viewers WHERE stream_id = @streamId AND viewer_id = @viewerId",
+            connection);
+        checkDuplicateCmd.Parameters.AddWithValue("@streamId", streamId);
+        checkDuplicateCmd.Parameters.AddWithValue("@viewerId", viewerId);
+    
+        var count = (long)checkDuplicateCmd.ExecuteScalar();
+
+        if (count > 0)
+        {
+            continue;
+        }
+
+        cmdStreamViewers.CommandText =
+            "INSERT INTO stream_viewers (stream_id, viewer_id) VALUES (@streamId, @viewerId)";
+        cmdStreamViewers.Parameters.Clear();
+
+        var streamIdParam = new NpgsqlParameter("@streamId", streamId);
+        var viewerIdParam = new NpgsqlParameter("@viewerId", viewerId);
+
+        cmdStreamViewers.Parameters.Add(streamIdParam);
+        cmdStreamViewers.Parameters.Add(viewerIdParam);
+
+        cmdStreamViewers.ExecuteNonQuery();
+    }
+
+
     // chat_messages
     for (var i = 0; i < fillingCnt; i++)
     {
@@ -156,7 +211,7 @@ if (existFlag)
 
         cmdChatMessages.CommandText =
             "INSERT INTO chat_messages (message, user_id, stream_id) VALUES (@message, @userId, @streamId)";
-        cmdChatMessages.Parameters.Clear(); 
+        cmdChatMessages.Parameters.Clear();
 
         var messageParam = new NpgsqlParameter("@message", message);
         var userIdParam = new NpgsqlParameter("@userId", userId);
@@ -169,34 +224,50 @@ if (existFlag)
         cmdChatMessages.ExecuteNonQuery();
     }
 
-
 // subscribers
+
     for (var i = 0; i < fillingCnt; i++)
     {
-        var subscriberUserId = faker.Random.Number(1, fillingCnt);
+        var subscribingUserId = faker.Random.Number(1, fillingCnt);
+        var subscribedUserId = faker.Random.Number(1, fillingCnt);
 
-        cmdSubscribers.CommandText = "INSERT INTO subscribers (subscriber_user_id) VALUES (@subscriberUserId)";
-        cmdSubscribers.Parameters.Clear(); 
+        cmdSubscribers.CommandText =
+            "INSERT INTO subscribers (subscribing_user_id, subscribed_user_id) VALUES (@subscribingUserId, @subscribedUserId)";
+        cmdSubscribers.Parameters.Clear();
 
-        var subscriberUserIdParam = new NpgsqlParameter("@subscriberUserId", subscriberUserId);
-        cmdSubscribers.Parameters.Add(subscriberUserIdParam);
+        var subscribingUserIdParam = new NpgsqlParameter("@subscribingUserId", subscribingUserId);
+        var subscribedUserIdParam = new NpgsqlParameter("@subscribedUserId", subscribedUserId);
+        cmdSubscribers.Parameters.Add(subscribingUserIdParam);
+        cmdSubscribers.Parameters.Add(subscribedUserIdParam);
 
         cmdSubscribers.ExecuteNonQuery();
+    }
+
+    var sample = new List<int>();
+    var generateCount = fillingCnt / 2;
+    for (var i = 0; i < 5; i++)
+    {
+        sample.Add(faker.Random.Number(1, fillingCnt));
     }
 
 // subscribed_users
     for (var i = 0; i < fillingCnt; i++)
     {
-        var subscribedUserId = faker.Random.Number(1, fillingCnt);
+        var subscribingUserId = sample[faker.Random.Number(0, sample.Count - 1)];
+        var subscribedUserId =  faker.Random.Number(1, fillingCnt);
 
-        cmdSubscribedUsers.CommandText = "INSERT INTO subscribed_users (subscribed_user_id) VALUES (@subscribedUserId)";
-        cmdSubscribedUsers.Parameters.Clear(); 
+        cmdSubscribedUsers.CommandText =
+            "INSERT INTO subscribed_users (subscribing_user_id, subscribed_user_id) VALUES (@subscribingUserId, @subscribedUserId)";
+        cmdSubscribedUsers.Parameters.Clear();
 
+        var subscribingUserIdParam = new NpgsqlParameter("@subscribingUserId", subscribingUserId);
         var subscribedUserIdParam = new NpgsqlParameter("@subscribedUserId", subscribedUserId);
+        cmdSubscribedUsers.Parameters.Add(subscribingUserIdParam);
         cmdSubscribedUsers.Parameters.Add(subscribedUserIdParam);
 
         cmdSubscribedUsers.ExecuteNonQuery();
     }
+
 
 // notifications
     for (var i = 0; i < fillingCnt; i++)
@@ -207,7 +278,7 @@ if (existFlag)
 
         cmdNotifications.CommandText =
             "INSERT INTO notifications (user_id, type, message) VALUES (@userId, @type, @message)";
-        cmdNotifications.Parameters.Clear(); 
+        cmdNotifications.Parameters.Clear();
 
         var userIdParam = new NpgsqlParameter("@userId", userId);
         var typeParam = new NpgsqlParameter("@type", type);
@@ -242,7 +313,7 @@ if (existFlag)
 
         cmdRecommendations.ExecuteNonQuery();
     }
-    
+
     // transactions_money 
     for (var i = 0; i < fillingCnt; i++)
     {
@@ -252,13 +323,15 @@ if (existFlag)
         var transactionType = faker.Finance.TransactionType();
         var status = faker.Random.ArrayElement(new[] { "pending", "completed", "failed" });
         var streamId = faker.Random.Number(1, fillingCnt);
-        var createdAt = faker.Date.Recent();
+        var startDate = new DateTime(2008, 1, 1);
+        var endDate = new DateTime(2024, 12, 31);
+        var createdAt = faker.Date.Between(startDate, endDate);
 
         cmdTransactionsMoney.CommandText = @"INSERT INTO transactions_money 
                                         (amount, sender_user_id, receiver_user_id, transaction_type, status, stream_id, created_at) 
                                         VALUES 
                                         (@amount, @senderUserId, @receiverUserId, @transactionType, @status, @streamId, @createdAt)";
-        cmdTransactionsMoney.Parameters.Clear(); 
+        cmdTransactionsMoney.Parameters.Clear();
 
         var amountParam = new NpgsqlParameter("@amount", amount);
         var senderUserIdParam = new NpgsqlParameter("@senderUserId", senderUserId);

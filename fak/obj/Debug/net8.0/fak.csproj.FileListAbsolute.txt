@@ -18,3 +18,4 @@
 /home/veronika/db-arch/fak/obj/Debug/net8.0/fak.pdb
 /home/veronika/db-arch/fak/obj/Debug/net8.0/fak.genruntimeconfig.cache
 /home/veronika/db-arch/fak/obj/Debug/net8.0/ref/fak.dll
+/home/veronika/db-arch/fak/obj/Debug/net8.0/fak.sourcelink.json

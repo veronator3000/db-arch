@@ -1,22 +1,22 @@
 # This is a generated file. Not intended for manual editing.
 version: "3.8"
 services:
-  fak_app:
+  analyze_app:
     build:
-      context: "/home/veronika/db-arch/fak"
+      context: "/home/veronika/db-arch/analyze"
       dockerfile: "Dockerfile"
       target: "build-env"
     command: []
     entrypoint:
     - "dotnet"
-    - "/app/bin/Debug/net8.0/fak.dll"
+    - "/app/bin/Debug/net8.0/analyze.dll"
     environment:
       DOTNET_ENVIRONMENT: "Development"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-    image: "fak:dev"
+    image: "analyze:dev"
     ports: []
     volumes:
     - "/home/veronika/.nuget/packages:/root/.nuget/packages"
-    - "/home/veronika/db-arch/fak:/app:rw"
+    - "/home/veronika/db-arch/analyze:/app:rw"
     - "/home/veronika/db-arch:/src:rw"
     working_dir: "/app"
