@@ -7,15 +7,13 @@ services:
     container_name: db
     restart: unless-stopped
     environment:
-      PATRONI: "true"
-      PATRONI_SCOPE: "twich"
-      PATRONI_RESTAPI_CONNECT_ADDRESS: "patroni:8008"
       POSTGRES_DB: twich
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_REPLICATION: "replica1,replica2"
     ports:
       - "5432:5432"
+    env_file:
+      - .env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U user -d twich -h localhost -p 5432" ]
       interval: 10s
