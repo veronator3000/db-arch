@@ -1,0 +1,8 @@
+FROM alpine:latest
+
+RUN apk add --no-cache postgresql-client
+COPY backups.sh /backups.sh
+RUN chmod +x /backups.sh
+
+EXPOSE 8084
+CMD ["sh", "/backups.sh"]

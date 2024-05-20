@@ -21,7 +21,10 @@ class Program
             "SELECT s.id AS stream_id, s.category, COUNT(sv.viewer_id) AS viewers_count FROM streams s LEFT JOIN stream_viewers sv ON s.id = sv.stream_id WHERE s.category = @category GROUP BY s.id, s.category;",
             "SELECT * FROM chat_messages WHERE stream_id = @stream_id;",
             "SELECT DATE_TRUNC('month', created_at) AS month, COUNT(*) AS transaction_count FROM transactions_money WHERE created_at >= DATE_TRUNC('year', CURRENT_DATE) - INTERVAL '5 years' GROUP BY DATE_TRUNC('month', created_at) ORDER BY DATE_TRUNC('month', created_at);",
-            "SELECT DISTINCT s.user_id as streamer_id, u.username as streamer_username, su.subscribing_user_id as find_for_user FROM streams s JOIN subscribed_users su ON s.user_id = su.subscribed_user_id JOIN users u on s.user_id = u.id WHERE su.subscribing_user_id = @subscribing_user_id;"
+            "SELECT DISTINCT s.user_id as streamer_id, u.username as streamer_username, su.subscribing_user_id as find_for_user FROM streams s JOIN subscribed_users su ON s.user_id = su.subscribed_user_id JOIN users u on s.user_id = u.id WHERE su.subscribing_user_id = @subscribing_user_id;",
+            "SELECT DATE_TRUNC('month', created_at) AS month, COUNT(*) AS transaction_count FROM transactions_money_before_2020 WHERE created_at >= DATE_TRUNC('year', CURRENT_DATE) - INTERVAL '5 years' GROUP BY DATE_TRUNC('month', created_at) ORDER BY DATE_TRUNC('month', created_at);",
+            "SELECT DATE_TRUNC('month', created_at) AS month, COUNT(*) AS transaction_count FROM transactions_money_after_2020 WHERE created_at >= DATE_TRUNC('year', CURRENT_DATE) - INTERVAL '5 years' GROUP BY DATE_TRUNC('month', created_at) ORDER BY DATE_TRUNC('month', created_at);"
+
         };
 
         var costs = new double[queries.Length][];
@@ -73,12 +76,11 @@ class Program
                                                 var startCost = double.Parse(match.Groups[1].Value);
                                                 var endCost = double.Parse(match.Groups[2].Value);
                                                 res.Add(endCost);
-                                                // Console.WriteLine(
-                                                //     $"attempt {a + 1}/{attemptCount}: startCost={startCost}, endCost={endCost}");
+                                                // Console.WriteLine( $"attempt {a + 1}/{attemptCount}: startCost={startCost}, endCost={endCost}");
                                             }
                                             else
                                             {
-                                                Console.WriteLine("no match found for cost in result: " + result);
+                                                // Console.WriteLine("((((((((((((((((((((((((");
                                             }
                                         }
 

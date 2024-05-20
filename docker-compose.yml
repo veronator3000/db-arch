@@ -1,29 +1,32 @@
 version: '3.8'
 
 services:
+
   db:
     image: postgres
     container_name: db
-    restart: no
+    restart: unless-stopped
     environment:
+      PATRONI: "true"
+      PATRONI_SCOPE: "twich"
+      PATRONI_RESTAPI_CONNECT_ADDRESS: "patroni:8008"
       POSTGRES_DB: twich
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+      POSTGRES_REPLICATION: "replica1,replica2"
     ports:
       - "5432:5432"
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "user", "-d", "twich", "-h", "localhost", "-p", "5432" ]
-      interval: 3s
-      timeout: 5s
+      test: [ "CMD-SHELL", "pg_isready -U user -d twich -h localhost -p 5432" ]
+      interval: 10s
       retries: 5
-      start_period: 5s
-  
+
   migration_script:
     restart: no
     container_name: migrations
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: DockerfileForMigrations
     environment:
       MIGRATION_VERSION: ${MIGRATION_VERSION}
       PASSWORD: ${PASSWORD}
@@ -37,7 +40,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-        
+  
   fak_app:
     restart: no
     container_name: fak_app
@@ -52,19 +55,19 @@ services:
     environment:
       FILLING_CNT: ${FILLING_CNT}
   
-  
   analyze_app:
     restart: no
-    container_name: analyze_app 
-  
+    container_name: analyze_app
     build:
       context: ./analyze
       dockerfile: Dockerfile
     volumes:
       - ./result:/docker-entrypoint-initdb.d/result
     depends_on:
-       fak_app:
-         condition: service_completed_successfully
+      fak_app:
+        condition: service_completed_successfully
+      partition_service:
+        condition: service_completed_successfully
     env_file:
       - .env
     ports:
@@ -74,8 +77,8 @@ services:
     restart: no
     container_name: partition_service
     build:
-      context: .
-      dockerfile: Dockerfile2
+      context: ./participant
+      dockerfile: DockerfileForPartition
     env_file:
       - .env
     environment:
@@ -86,9 +89,23 @@ services:
         condition: service_completed_successfully
       db:
         condition: service_healthy
-      analyze_app:
-        condition: service_completed_successfully
     ports:
       - "8083:8083"
-
-
+  
+  backup_service:
+    restart: always
+    container_name: backup
+    build:
+      context: ./backups
+      dockerfile: DockerfileForBackups
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${USER}
+      POSTGRES_PASSWORD: ${PASSWORD}
+      BACKUP_SCHEDULE: ${BACKUP_SCHEDULE}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backups_res:/docker-entrypoint-initdb.d/backups_res

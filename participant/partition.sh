@@ -15,6 +15,10 @@ CREATE TABLE IF NOT EXISTS transactions_money_after_2020 (
     CHECK (created_at >= DATE '2020-01-01')
 ) INHERITS (transactions_money);
 
+CREATE INDEX idx_transactions_money_before_2020_created_at ON transactions_money_before_2020 (created_at);
+
+CREATE INDEX idx_transactions_money_after_2020_created_at ON transactions_money_after_2020 (created_at);
+
 
 -- transactions_money_before_2020
 INSERT INTO transactions_money_before_2020 (id, amount, sender_user_id, receiver_user_id, transaction_type, status, stream_id, created_at)
@@ -27,6 +31,7 @@ INSERT INTO transactions_money_after_2020 (id, amount, sender_user_id, receiver_
 SELECT id, amount, sender_user_id, receiver_user_id, transaction_type, status, stream_id, created_at
 FROM transactions_money
 WHERE created_at >= '2020-01-01';
+
 
 EOF
 
